@@ -3,7 +3,7 @@ const {randomBytes} =  require('crypto')
 const bodyParser = require('body-parser')
 const app = express();
 const cors = require('cors')
-
+const axios = require('axios')
 
 app.use(cors())
 app.use(bodyParser.urlencoded({extended:true}))
@@ -19,8 +19,11 @@ app.post('/posts/:id/comments',(req,res)=>{
     const comments = commentsByPostId[req.params.id] || [];
     comments.push({id: commentId,content})
     commentsByPostId[req.params.id]=comments
+    axios.post('http://localhost:4005/events',{type:'CommentCreated',data:{id:commentId,content,postId:req.params.id}}).catch(err=>console.log(err.message))
     res.status(201).send(comments)
 })
+
+app.post('/events',(req,res)=> console.log(req.body.type))
 
 app.listen(4001,()=>{
     console.log('Listening on 4001')
