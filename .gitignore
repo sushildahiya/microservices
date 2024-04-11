@@ -2,7 +2,11 @@
 /client/node_modules
 /posts/node_modules
 /comments/node_modules
+/event-bus/node_modules
+/query/node_modules
+/moderation/node_modules
 logs
+
 *.log
 npm-debug.log*
 yarn-debug.log*
